@@ -10,7 +10,7 @@ class User(Base):
   name = Column(String, nullable = False, unique = True)
   password = Column(String, nullable = False)
   student_id = Column(String, nullable = False, unique = True)
-  access_level = Column(Enum(['ADMIN', 'REGULAR_USER'], name='access_level'))
+  access_level = Column(Enum('ADMIN', 'REGULAR_USER', name='access_level'))
 
   def __init__ (self, name, password, student_id):
     self.name = name
