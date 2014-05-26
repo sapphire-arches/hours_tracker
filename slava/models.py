@@ -1,10 +1,12 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Enum
+from flask.ext.login import UserMixin
 
 Base = declarative_base()
 
 
-class User(Base):
+# inherit from UserMixin to make sure flask_login works properly
+class User(Base, UserMixin):
   __tablename__ = 'users'
 
   id = Column(Integer, primary_key=True)
@@ -17,6 +19,10 @@ class User(Base):
     self.name = name
     self.password = password
     self.student_id = student_id
+
+  # get the user id that flask_login will use
+  def get_id(self):
+    return self.name
 
 
 class Event(Base):
