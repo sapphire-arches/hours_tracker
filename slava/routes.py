@@ -1,8 +1,10 @@
 from slava.views import core
+import slava.authentication as auth
 
 routes = [
     ('/', core.index, ['GET']),
-    ('/login/', core.login, ['GET', 'POST']),
+    ('/login/', core.login_view, ['GET']),
+    ('/login/', auth.perform_login, ['POST']),
     ('/test/', core.test_page, ['GET'])
 ]
 

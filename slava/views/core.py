@@ -1,12 +1,12 @@
 from flask.ext.login import login_required
-
+from flask import render_template, request
 
 def index():
-  return "hello world"
+  return render_template('index.html')
 
 
-def login():
-  return "loggin in is fun =P"
+def login_view():
+  return render_template('login.html', method=request.method)
 
 
 @login_required
