@@ -2,6 +2,7 @@ from slava.models import User
 from slava import app, db, login_manager
 from flask import flash
 
+
 @login_manager.user_loader
 def load_user(userid):
   session = db.session
