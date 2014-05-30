@@ -2,10 +2,20 @@
 {% block title %} Profile {% endblock %}
 {% block content %}
 
-<form method="post" action="/profile/namechange/">
-  <label for="name">Name:</label>
-  <input type="text" name="name" placeholder="{{ uname }}"><br>
-  <input type="submit" value="submit">
-</form>
+<div class="roundbox">
+  <form method="post" action="/profile/namechange/">
+    <label for="name">Name:</label>
+    <input type="text" name="name" placeholder="{{ uname }}">
+    <input type="submit" value="submit">
+  </form>
+</div>
+
+<div class="roundbox">
+  Activities submit go here
+</div>
+
+<div class="roundbox">
+  Activities submited list go here
+</div>
 
 {% endblock %}
