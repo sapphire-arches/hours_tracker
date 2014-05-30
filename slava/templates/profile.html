@@ -2,6 +2,12 @@
 {% block title %} Profile {% endblock %}
 {% block content %}
 
+{% if is_admin %}
+<a href="/admin/">admin party house</a>
+{% endif %}
+
+<a href="/logout/">logout</a>
+
 <div class="roundbox">
   <form method="post" action="/profile/namechange/">
     <label for="name">Name:</label>

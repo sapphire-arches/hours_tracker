@@ -5,7 +5,7 @@ from slava import db, app
 
 @login_required
 def profile():
-  return render_template('profile.html', uname=current_user.name)
+  return render_template('profile.html', uname=current_user.name, is_admin=current_user.access_level=='ADMIN')
 
 
 @login_required
