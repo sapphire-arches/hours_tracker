@@ -1,6 +1,7 @@
 from slava.models import User
 from slava import app, db, login_manager
 from flask import flash,redirect,request
+from flask.ext.login import login_user
 from urllib.request import quote, urlopen, Request
 from urllib.parse import urlencode
 from urllib.error import HTTPError
@@ -62,7 +63,7 @@ def _api_request(url, access_token):
 
 def oauth_callback():
   if 'error' in request.args:
-    pass # not really much we can do here, TODO: display some feedback
+    return redirect('/login/error/')
   else:
     data = {
             'code' : request.args['code'],
@@ -93,4 +94,9 @@ def oauth_callback():
       db.session.add(u)
     u.access_token = access_token
     db.session.commit()
-  return "hello {}, welcome to the hours tracker!".format(u.name)
+    login_user(u)
+  return redirect('/profile/')
+
+
+def login_error():
+  return render_template('login_error.html')

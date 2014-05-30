@@ -24,7 +24,7 @@ class User(Base, UserMixin):
   # required by flask-login to get a string id for the user - we use the users id because that
   # is garenteed to be unique
   def get_id(self):
-    return unicode(self.id)
+    return str(self.id)
 
 
 class Event(Base):

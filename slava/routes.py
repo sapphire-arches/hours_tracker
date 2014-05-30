@@ -1,10 +1,13 @@
-from slava.views import core
+from slava.views import core, profile
 import slava.authentication as auth
 
 routes = [
     ('/', core.index, ['GET']),
     ('/login/', auth.login_redirect, ['GET']),
-    ('/oauth2callback', auth.oauth_callback, ['GET']),
+    ('/login/error/', auth.login_error, ['GET']),
+    ('/profile/', profile.profile, ['GET']),
+    ('/profile/namechange/', profile.setname, ['POST']),
+    ('/oauth2callback/', auth.oauth_callback, ['GET']),
     ('/test/', core.test_page, ['GET'])
 ]
 
