@@ -1,7 +1,7 @@
 from slava.models import User
 from slava import app, db, login_manager
 from flask import flash,redirect,request
-from flask.ext.login import login_user
+from flask.ext.login import login_user, logout_user, current_user
 from urllib.request import quote, urlopen, Request
 from urllib.parse import urlencode
 from urllib.error import HTTPError
@@ -100,3 +100,18 @@ def oauth_callback():
 
 def login_error():
   return render_template('login_error.html')
+
+
+def logout():
+  logout_user()
+  return redirect('/')
+
+
+def admin_required(func):
+  def decorate_view(*args, **kwargs):
+    if not(current_user.is_active()):
+      app.login_manager.unauthorized()
+    if not(current_user.access_level == 'ADMIN'):
+      app.login_manager.unauthorized()
+    return func(*args, **kwargs)
+  return decorate_view
