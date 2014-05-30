@@ -1,1 +1,1 @@
-web: gunicorn slava:app
+web: gunicorn slava:app --debug

@@ -3,8 +3,8 @@ import slava.authentication as auth
 
 routes = [
     ('/', core.index, ['GET']),
-    ('/login/', core.login_view, ['GET']),
-    ('/login/', auth.perform_login, ['POST']),
+    ('/login/', auth.login_redirect, ['GET']),
+    ('/oauth2callback', auth.oauth_callback, ['GET']),
     ('/test/', core.test_page, ['GET'])
 ]
 

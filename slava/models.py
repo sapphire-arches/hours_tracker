@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy import Column, Integer, String, Enum, Date, ForeignKey
 from flask.ext.login import UserMixin
 
 Base = declarative_base()
@@ -11,27 +11,30 @@ class User(Base, UserMixin):
 
   id = Column(Integer, primary_key=True)
   name = Column(String, nullable=False, unique=True)
-  password = Column(String, nullable=False)
-  student_id = Column(String, nullable=False, unique=True)
-  access_level = Column(Enum('ADMIN', 'REGULAR_USER', name='access_level'))
+  email = Column(String, nullable=False, unique=True)
+  access_token = Column(String(length=128))
+  access_token_expire_date = Column(Date)
+  access_level = Column(Enum('ADMIN', 'REGULAR_USER', name='access_level'), nullable=False)
 
-  def __init__(self, name, password, student_id):
+  def __init__(self, name, email):
     self.name = name
-    self.password = password
-    self.student_id = student_id
+    self.email = email
+    self.access_level = 'REGULAR_USER'
 
-  # get the user id that flask_login will use
+  # required by flask-login to get a string id for the user - we use the users id because that
+  # is garenteed to be unique
   def get_id(self):
-    return self.name
+    return unicode(self.id)
 
 
 class Event(Base):
   __tablename__ = 'hours'
 
   id = Column(Integer, primary_key=True)
-  title = Column(String)
-  description = Column(String)
-  hours = Column(Integer)
+  user = Column(Integer, ForeignKey('users.id'), nullable=False)
+  title = Column(String, nullable=False)
+  description = Column(String, nullable=False)
+  hours = Column(Integer, nullable=False)
 
   def __init__(self, title, description, hours):
     self.title = title
